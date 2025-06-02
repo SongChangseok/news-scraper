@@ -1,4 +1,4 @@
-const { OpenAI } = require("openai");
+import { OpenAI } from "openai";
 
 export async function summarizeArticles(articles) {
   const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
