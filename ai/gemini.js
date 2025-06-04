@@ -38,6 +38,8 @@ export async function summarizeArticles(articles) {
         contents: [{ text: prompt }],
       });
 
+      console.log("gemini::", article);
+
       return {
         ...article,
         summary: response.text,
