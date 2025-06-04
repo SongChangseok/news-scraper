@@ -8,8 +8,9 @@ export async function saveToNotion(topic, summaries) {
       parent: { database_id: process.env.NOTION_DB_ID },
       properties: {
         title: { title: [{ text: { content: item.title } }] },
-        url: { url: item.link },
-        // 키워드: {multi_select: item.keywords.map(keyword => ({ name: keyword })) },
+        url: { url: item.url },
+        pubDate: { date: { start: item.pubDate } },
+        category: { multi_select: item.category.map((name) => ({ name })) },
         summary: { rich_text: [{ text: { content: item.summary } }] },
       },
     })
