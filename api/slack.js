@@ -1,6 +1,6 @@
 // api/slack-events.js
+import { summarizeArticles } from "../ai/gemini.js";
 import { scrapeNews } from "../news/scraper.js";
-import { summarizeArticles } from "../gpt/summarize.js";
 import { saveToNotion } from "../notion/notionClient.js";
 
 export default async function handler(req, res) {
