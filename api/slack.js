@@ -6,20 +6,21 @@ import { saveToNotion } from "../notion/notionClient.js";
 export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).send("Method Not Allowed");
 
-  let body = req.body;
+  const body = req.body;
+  // let body = req.body;
 
-  if (!body || !body.type) {
-    try {
-      const chunks = [];
-      for await (const chunk of req) {
-        chunks.push(chunk);
-      }
-      const rawBody = Buffer.concat(chunks).toString();
-      body = JSON.parse(rawBody);
-    } catch (err) {
-      return res.status(400).send("Invalid JSON");
-    }
-  }
+  // if (!body || !body.type) {
+  //   try {
+  //     const chunks = [];
+  //     for await (const chunk of req) {
+  //       chunks.push(chunk);
+  //     }
+  //     const rawBody = Buffer.concat(chunks).toString();
+  //     body = JSON.parse(rawBody);
+  //   } catch (err) {
+  //     return res.status(400).send("Invalid JSON");
+  //   }
+  // }
 
   // Slack URL 인증 처리
   if (body.type === "url_verification") {
@@ -62,3 +63,9 @@ export default async function handler(req, res) {
 
   return res.status(200).end();
 }
+
+export const config = {
+  api: {
+    bodyParser: true,
+  },
+};
