@@ -29,6 +29,27 @@ const ai = new GoogleGenAI({
   apiKey: process.env.GEMINI_API_KEY, // 환경 변수에 API 키 설정
 });
 
+async function listAvailableModels() {
+  try {
+    const models = await ai.models.list();
+    console.log("사용 가능한 모델 목록:");
+    for await (const model of models) {
+      console.log(`- ${model.name}`);
+      if (
+        model.supportedMethods &&
+        model.supportedMethods.includes("generateContent")
+      ) {
+        console.log(`  (generateContent 지원)`);
+      }
+    }
+  } catch (error) {
+    console.error("모델 목록을 불러오는 중 오류 발생:", error);
+  }
+}
+
+// 이 함수를 호출하여 모델 목록을 확인하세요.
+listAvailableModels();
+
 export async function summarizeArticles(articles) {
   const summaries = await Promise.all(
     articles.map(async (article) => {
