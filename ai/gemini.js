@@ -32,9 +32,10 @@ const ai = new GoogleGenAI({
 export async function summarizeArticles(articles) {
   const summaries = await Promise.all(
     articles.map(async (article) => {
+      const prompt = `다음 기사를 간결하게 요약해줘:\n\n제목: ${article.title}\n\n본문: ${article.content}`;
       const response = await ai.models.generateContent({
         model: "gemini-pro",
-        contents: `다음 기사를 간결하게 요약해줘:\n\n제목: ${article.title}\n\n본문: ${article.content}`,
+        contents: [{ text: prompt }],
       });
 
       const text = response.text();
@@ -43,17 +44,6 @@ export async function summarizeArticles(articles) {
         ...article,
         summary: text,
       };
-
-      //   const prompt = `다음 기사를 간결하게 요약해줘:\n\n제목: ${article.title}\n\n본문: ${article.content}`;
-
-      //   const result = await model.generateContent(prompt);
-      //   const response = await result.response;
-      //   const text = response.text();
-
-      //   return {
-      //     ...article,
-      //     summary: text,
-      //   };
     })
   );
 
