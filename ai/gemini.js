@@ -38,11 +38,9 @@ export async function summarizeArticles(articles) {
         contents: [{ text: prompt }],
       });
 
-      const text = response.text();
-
       return {
         ...article,
-        summary: text,
+        summary: response.text,
       };
     })
   );
