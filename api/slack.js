@@ -20,6 +20,8 @@ export default async function handler(req, res) {
 
     // 슬랙에 응답 메시지 보내기
     const sendSlackMessage = async (text) => {
+      console.log(`Sending message to Slack channel ${channel}: ${text}`)
+
       await fetch('https://slack.com/api/chat.postMessage', {
         method: 'POST',
         headers: {

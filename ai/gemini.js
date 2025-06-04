@@ -30,11 +30,9 @@ const ai = new GoogleGenAI({
 })
 
 export async function summarizeArticles(articles) {
-  const summaries = await Promise.all(
-    articles.map(async (article) => {
-      // const prompt = `다음 기사를 간결하게 요약해줘:\n\n제목: ${article.title}\n\n본문: ${article.content}`
+  console.log('summarizeArticles start')
 
-      const prompt = `
+  const prompt = `
         다음 뉴스 기사들을 요약하고, 아래 JSON 형식에 맞게 정리해 주세요.
 
         요약 시 유의사항:
@@ -58,17 +56,22 @@ export async function summarizeArticles(articles) {
         기사 리스트:
         ${JSON.stringify(articles)}
       `
-      const response = await ai.models.generateContent({
-        model: 'gemini-2.0-flash',
-        contents: [{ text: prompt }],
-      })
+  const response = await ai.models.generateContent({
+    model: 'gemini-2.0-flash',
+    contents: [{ text: prompt }],
+  })
 
-      return {
-        ...article,
-        summary: response.text,
-      }
-    })
-  )
-  console.log('gemini::', summaries)
-  return summaries
+  // const summaries = await Promise.all(
+  //   articles.map(async (article) => {
+
+  //     return {
+  //       ...article,
+  //       summary: response.text,
+  //     }
+  //   })
+  // )
+  // console.log('gemini::', summaries)
+  console.log('summarizeArticles', response)
+
+  return 'test'
 }
