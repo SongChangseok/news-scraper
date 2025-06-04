@@ -34,7 +34,7 @@ export async function summarizeArticles(articles) {
     articles.map(async (article) => {
       const response = await ai.models.generateContent({
         model: "gemini-pro",
-        prompt: `다음 기사를 간결하게 요약해줘:\n\n제목: ${article.title}\n\n본문: ${article.content}`,
+        contents: `다음 기사를 간결하게 요약해줘:\n\n제목: ${article.title}\n\n본문: ${article.content}`,
       });
 
       const text = response.text();
