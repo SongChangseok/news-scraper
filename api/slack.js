@@ -7,20 +7,6 @@ export default async function handler(req, res) {
   if (req.method !== "POST") return res.status(405).send("Method Not Allowed");
 
   const body = req.body;
-  // let body = req.body;
-
-  // if (!body || !body.type) {
-  //   try {
-  //     const chunks = [];
-  //     for await (const chunk of req) {
-  //       chunks.push(chunk);
-  //     }
-  //     const rawBody = Buffer.concat(chunks).toString();
-  //     body = JSON.parse(rawBody);
-  //   } catch (err) {
-  //     return res.status(400).send("Invalid JSON");
-  //   }
-  // }
 
   // Slack URL 인증 처리
   if (body.type === "url_verification") {
@@ -56,8 +42,13 @@ export default async function handler(req, res) {
         `✅ "${topic}" 관련 뉴스가 노션에 저장되었습니다.`
       );
     } catch (error) {
-      console.error("에러:", error);
-      await sendSlackMessage("❌ 뉴스 수집 또는 요약 중 오류가 발생했습니다.");
+      await sendSlackMessage(
+        `❌ 오류 발생\n\`\`\`${JSON.stringify(
+          error,
+          Object.getOwnPropertyNames(error),
+          2
+        )}\`\`\``
+      );
     }
   }
 
